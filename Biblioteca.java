@@ -1,4 +1,4 @@
-package bibliotecaIntegrador;
+package POO_Actividad_Integradora2.Egg;
 
 import java.util.ArrayList;
 
@@ -23,5 +23,12 @@ public class Biblioteca {
 
     public void setCatalogo(ArrayList<Libro> catalogo) {
         this.catalogo = catalogo;
+    }
+
+    public void prestarLibro(Libro libro, Persona usuario){
+        //cambiamos el estado del libro
+        libro.setPrestado(true);
+        //agremos ese libro en la lista personal del usuario
+        usuario.agregarLibro(libro);
     }
 }

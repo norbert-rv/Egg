@@ -1,6 +1,9 @@
-package bibliotecaIntegrador;
+package POO_Actividad_Integradora2.Egg;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.crypto.AEADBadTagException;
 
 public class Principal {
     
@@ -10,6 +13,7 @@ public class Principal {
         int opcion;
 
         Biblioteca biblioteca = new Biblioteca();
+        ArrayList<Persona> usuarios = new ArrayList<>();
 
         do {
             mostrarMenu();
@@ -41,15 +45,58 @@ public class Principal {
                     break;
 
                 case 3:
+                    //mostarr la lista de libros que se pueden prestar
+                    System.out.println("\nMostrando información de todos los libros disponibles.. \n");
+                    for (Libro libro : biblioteca.getCatalogo()) {
+                        if(!libro.isPrestado()){
+                            System.out.println("Libro n° - " + (biblioteca.getCatalogo().indexOf(libro)+1));
+                            libro.mostrarInformacion();
+                            System.out.println("-------------------");
+                        }
+                    }
+
+                    
+                    //ingrese el nombre del usuario para prestale el libro
+                    if(usuarios.isEmpty()){
+                        System.out.println("No hay usuarios para prestar libros");
+                    }else{
+                        System.out.println("Ingrese su nombre: ");
+                        String nombreUsuario = sc.nextLine();
+                        System.out.println("Escribe el indice del libro: ");
+                        //escoger con el indice el libro que quiero
+                        int indiceLibro = Integer.valueOf(sc.nextLine());
+                        //ciclo para encontrar suuario
+                        for (Persona p : usuarios) {
+                            if(p.getNombre().equals(nombreUsuario)){
+                                p.agregarLibro(biblioteca.getCatalogo().get(indiceLibro-1));
+                            }
+                        }
+                        //dar notificación
+                        System.out.println("Libro agregado correctamente...");
+                    }
+                    break;
+                case 4:
                     System.out.println("\nSaliendo... \n");
                     break;
-
+                case 5:
+                    System.out.println("Ingrese su nombre: ");
+                    nombre = sc.nextLine();
+                    System.out.println("Ingrese su apellido: ");
+                    String apellido = sc.nextLine();
+                    //agregar usuario
+                    usuarios.add(new Persona(nombre, apellido));
+                    //notificación
+                    System.out.println("Usuario creado correctamente!");
+                    break;
+                case 6:
+                    System.out.println("\nSaliendo... \n");
+                    break;
                 default:
                     System.out.println("\nSeleccione una opción correcta... \n");
                     break;
             }
             
-        } while (opcion != 3);
+        } while (opcion != 6);
 
         sc.close();
     }
@@ -60,7 +107,10 @@ public class Principal {
                 Menu:
                 1. Agregar libro
                 2. Mostrar información de los libros
-                3. Salir
+                3. Prestar libro
+                4. Devolver libro
+                5. Crear usuario
+                6. Salir
 
                 Opcion: 
                 """);

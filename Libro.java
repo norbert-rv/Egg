@@ -1,16 +1,16 @@
-package bibliotecaIntegrador;
-
-
+package POO_Actividad_Integradora2.Egg;
 
 public class Libro extends ItemBiblioteca implements Comparable<Libro> {
     private String titulo;
     private String autor;
     private int nroPaginas;
+    private boolean prestado;
     
     public Libro(String titulo, String autor, int nroPaginas) {
         this.titulo = titulo;
         this.autor = autor;
         this.nroPaginas = nroPaginas;
+        this.prestado = false;
     }
 
     public void mostrarInformacion() {
@@ -63,5 +63,21 @@ public class Libro extends ItemBiblioteca implements Comparable<Libro> {
     @Override
     public int compareTo(Libro libro) {
         return this.titulo.compareTo(libro.getTitulo());
+    }
+
+    public boolean isPrestado() {
+        return prestado;
+    }
+
+    public void setPrestado(boolean prestado) {
+        this.prestado = prestado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Libro l){
+            return l.getTitulo().equals(this.titulo);
+        }
+        return false;
     }
 }
